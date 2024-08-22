@@ -15,6 +15,17 @@ class Ball {
             y = posY;
             currentDirection = STOP;
         }
+        
+        void reset() {
+            x = originalPX;
+            y = originalPY;
+            currentDirection = STOP;
+        }
+
+        void changeDirection(Direction direction) {
+            currentDirection = direction;
+        }
+
 };
 
 int main() {
