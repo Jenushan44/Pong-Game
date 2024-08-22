@@ -29,7 +29,7 @@ class Ball {
         }
 
         void randomDirection() {
-            currentDirection = (Direction) ((rand() % 6) + 1)
+            currentDirection = (Direction) ((rand() % 6) + 1);
         }
 
         inline int getX() {
@@ -44,6 +44,35 @@ class Ball {
             return currentDirection;
         }
 
+        void moveBall() {
+            switch (currentDirection) {
+                case STOP:
+                    break;
+                case LEFT:
+                    x--;
+                    break;
+                case RIGHT:
+                    x++;
+                    break;
+                case UPLEFT:
+                    x--;
+                    y--;
+                    break;
+                case DOWNLEFT:
+                    x--;
+                    y++;
+                    break;
+                case UPRIGHT:
+                    x++;
+                    y--;
+                    break;
+                case DOWNRIGHT:
+                    x++;
+                    y++;
+                default:
+                    break;
+            }
+        }
 };
 
 int main() {
