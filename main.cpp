@@ -7,6 +7,14 @@ class Ball {
     int x, y;
     int originalPX, originalPY;
     Direction currentDirection;
+    public:
+        Ball(int posX, int posY) {
+            originalPX = posX;
+            originalPY = posY;
+            x = posX;
+            y = posY;
+            currentDirection = STOP;
+        }
 };
 
 int main() {
