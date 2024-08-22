@@ -1,4 +1,6 @@
 #include <iostream>
+#include <conio.h>
+#include <time.h>
 
 enum Direction {STOP, LEFT, UPLEFT, DOWNLEFT, RIGHT, UPRIGHT, DOWNRIGHT};
 
@@ -123,6 +125,46 @@ class Paddle {
             return o;
         }
 };
+
+class GameManager {
+private:
+        int width;
+        int height;
+        int scorePlayer1;
+        int scorePlayer2;
+        char upPlayer1;
+        char upPlayer2;
+        char downPlayer1;
+        char downPlayer2;
+        bool exit;
+        Ball * ball;
+        Paddle * paddlePlayer1;
+        Paddle * paddlePlayer2;
+    
+    public: 
+        GameManager(int w, int h) {
+            srand(time(NULL));
+            exit = false;
+            upPlayer1 = 'w';
+            upPlayer2 = 'o';
+            downPlayer1 = 's';
+            downPlayer2 = 'l';
+            scorePlayer1 = 0;
+            scorePlayer2 = 0;
+            width = w;
+            height = h;
+            ball = new Ball(w / 2, h / 2);
+            paddlePlayer1 = new Paddle(1, h/2 -3);
+            paddlePlayer2 = new Paddle(w-2, h/2 - 3); 
+        }
+        
+        GameManager() {
+            delete ball;
+            delete paddlePlayer1; 
+            delete paddlePlayer2;
+        }
+};
+
 
 int main() {
 
