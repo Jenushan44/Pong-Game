@@ -3,10 +3,12 @@
 enum Direction {STOP, LEFT, UPLEFT, DOWNLEFT, RIGHT, UPRIGHT, DOWNRIGHT};
 
 class Ball {
+    
     private:
     int x, y;
     int originalPX, originalPY;
     Direction currentDirection;
+    
     public:
         Ball(int posX, int posY) {
             originalPX = posX;
@@ -24,6 +26,22 @@ class Ball {
 
         void changeDirection(Direction direction) {
             currentDirection = direction;
+        }
+
+        void randomDirection() {
+            currentDirection = (Direction) ((rand() % 6) + 1)
+        }
+
+        inline int getX() {
+            return x;
+        }
+
+        inline int getY() {
+            return y;
+        }
+
+        inline Direction direction() {
+            return currentDirection;
         }
 
 };
