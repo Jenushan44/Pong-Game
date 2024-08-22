@@ -96,9 +96,36 @@ class Paddle {
             x = posX;
             y = posY;
         }
+
+    inline void resetPaddle() {
+        x = originalPX;
+        y = originalPY;
+    }
+
+    inline int getX() {
+        return x;
+    }
+
+    inline int getY() {
+        return y;
+    }
+
+    inline void moveUp() {
+        y--;
+    }
+
+    inline void moveDown() {
+        y++;
+    }
+
+    friend std::ostream& operator<<(std::ostream& o, Paddle b) {
+            o << "Paddle [" << b.x << ", " << b.y << "]" << std::endl;
+            return o;
+        }
 };
 
 int main() {
-    Ball b(0,0);
+
+  
     return 0;
 }
