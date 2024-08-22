@@ -2,8 +2,7 @@
 
 enum Direction {STOP, LEFT, UPLEFT, DOWNLEFT, RIGHT, UPRIGHT, DOWNRIGHT};
 
-class Ball {
-    
+class Ball {    
     private:
     int x, y;
     int originalPX, originalPY;
@@ -74,16 +73,32 @@ class Ball {
             }
         }
 
-        void printPosition() {
-            std::cout << "Ball [" << x << ", " << y << "][" << currentDirection <<"]" << std::endl;
+        friend std::ostream& operator<<(std::ostream& o, Ball b) {
+            o << "Ball [" << b.x << ", " << b.y << "][" << b.currentDirection <<"]" << std::endl;
+            return o;
+        }
+};
+
+class Paddle {
+    private:
+        int x;
+        int y;
+        int originalPX;
+        int originalPY;
+    public:
+        Paddle() {
+            x = 0;
+            y = 0;
+        }
+        Paddle(int posX, int posY) : Paddle() {
+            originalPX = posX;
+            originalPY = posY;
+            x = posX;
+            y = posY;
         }
 };
 
 int main() {
-
     Ball b(0,0);
-    b.printPosition();
     return 0;
-    
-
 }
