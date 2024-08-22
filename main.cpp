@@ -73,9 +73,17 @@ class Ball {
                     break;
             }
         }
+
+        void printPosition() {
+            std::cout << "Ball [" << x << ", " << y << "][" << currentDirection <<"]" << std::endl;
+        }
 };
 
 int main() {
 
+    Ball b(0,0);
+    b.printPosition();
+    return 0;
+    
 
 }
