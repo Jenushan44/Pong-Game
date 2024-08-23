@@ -175,11 +175,47 @@ private:
             paddlePlayer1->resetPaddle();
             paddlePlayer2->resetPaddle();
         }
+
+        void Draw() {
+            system("cls");
+            for (int i = 0; i < width + 2; i++) {
+                std::cout << "-";
+            }
+            std::cout << std::endl;
+
+            for (int i = 0; i < height; i++) {    // y
+                for (int j = 0; j < width; j++) { //x
+                    int ballX = ball->getX();
+                    int ballY = ball->getY();
+                    int paddlePlayer1X = paddlePlayer1->getX();
+                    int paddlePlayer2X = paddlePlayer2->getX();
+                    int paddlePlayer1Y = paddlePlayer1->getY();
+                    int paddlePlayer2Y = paddlePlayer2->getY();
+
+                    if (j == 0) {
+                        std::cout << "-";
+                    }
+
+                    if (j == width -1) {
+                        std::cout << "-";
+                    }
+                }
+            }
+
+            for (int i = 0; i < width + 2; i++) {
+                std::cout << "-";
+            }
+            std::cout << std::endl;
+
+
+
+        }
 };
 
 
 int main() {
 
-  
+    GameManager b(40, 20);
+    b.Draw();
     return 0;
 }
