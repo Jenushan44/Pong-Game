@@ -163,6 +163,18 @@ private:
             delete paddlePlayer1; 
             delete paddlePlayer2;
         }
+
+        void Score(Paddle * paddlePlayer) {
+            if (paddlePlayer == paddlePlayer1) {
+                scorePlayer1 += 1;
+            } else if (paddlePlayer == paddlePlayer2) {
+                scorePlayer2 += 1;
+            }
+
+            ball->reset();
+            paddlePlayer1->resetPaddle();
+            paddlePlayer2->resetPaddle();
+        }
 };
 
 
