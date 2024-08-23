@@ -178,12 +178,17 @@ private:
 
         void Draw() {
             system("cls");
+
+            // Top Border
             for (int i = 0; i < width + 2; i++) {
-                std::cout << "-";
+                std::cout << "#";
             }
             std::cout << std::endl;
 
+            // Middle Section
             for (int i = 0; i < height; i++) {    // y
+                //std::cout << "#";
+
                 for (int j = 0; j < width; j++) { //x
                     int ballX = ball->getX();
                     int ballY = ball->getY();
@@ -191,24 +196,46 @@ private:
                     int paddlePlayer2X = paddlePlayer2->getX();
                     int paddlePlayer1Y = paddlePlayer1->getY();
                     int paddlePlayer2Y = paddlePlayer2->getY();
-
+                    
                     if (j == 0) {
-                        std::cout << "-";
+                        std::cout << "#";
                     }
 
+                    if (ballX == j && ballY == i) {
+                        std::cout << "O";           // Ball in Middle
+                    } else if (paddlePlayer1X == j && paddlePlayer1Y == i) {
+                        std::cout << "#";           //Paddle Player 1
+                    } else if (paddlePlayer2X == j && paddlePlayer2Y == i) {
+                        std::cout << "#";           // Paddle Player 2
+                    } else if (paddlePlayer1X == j && paddlePlayer1Y + 1 == i) {
+                        std::cout << "#";         
+                    } else if (paddlePlayer1X == j && paddlePlayer1Y + 2 == i) {
+                        std::cout << "#";           
+                    } else if (paddlePlayer1X == j && paddlePlayer1Y + 3 == i) {
+                        std::cout << "#";                               
+                    } else if (paddlePlayer2X == j && paddlePlayer2Y + 1 == i) {
+                        std::cout << "#";         
+                    } else if (paddlePlayer2X == j && paddlePlayer2Y + 2 == i) {
+                        std::cout << "#";           
+                    } else if (paddlePlayer2X == j && paddlePlayer2Y + 3 == i) {
+                        std::cout << "#";           
+                    } else {
+                        std::cout << " ";                          
+                    }
+                    
                     if (j == width -1) {
-                        std::cout << "-";
+                        std::cout << "#";
                     }
                 }
+                std::cout << std::endl;
             }
 
             for (int i = 0; i < width + 2; i++) {
-                std::cout << "-";
+                std::cout << "#";
             }
             std::cout << std::endl;
 
-
-
+            std::cout << "Score 1: " << scorePlayer1 << std::endl << "Score 2: " << scorePlayer2 << std::endl;
         }
 };
 
