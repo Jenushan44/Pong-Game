@@ -237,6 +237,18 @@ private:
 
             std::cout << "Score 1: " << scorePlayer1 << std::endl << "Score 2: " << scorePlayer2 << std::endl;
         }
+
+        void Logic() {
+            ball->moveBall();
+
+            int ballX = ball->getX();
+            int ballY = ball->getY();
+            int paddlePlayer1X = paddlePlayer1->getX();           
+            int paddlePlayer2X = paddlePlayer2->getX();
+            int paddlePlayer1Y = paddlePlayer1->getY();
+            int paddlePlayer2Y = paddlePlayer2->getY();
+
+        }
 };
 
 
