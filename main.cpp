@@ -238,7 +238,7 @@ private:
             std::cout << "Score 1: " << scorePlayer1 << std::endl << "Score 2: " << scorePlayer2 << std::endl;
         }
 
-        void Logic() {
+        void userInput() {
             ball->moveBall();
 
             int ballX = ball->getX();
@@ -255,29 +255,36 @@ private:
                         paddlePlayer1->moveUp();
                     }
                 } 
-            
+                
                 if (currentKey == upPlayer2) {      
                     if (paddlePlayer2Y > 0) {   
                         paddlePlayer2->moveUp();
                     }
                 } 
-            
-            if (currentKey == downPlayer1) {      
-                    if (paddlePlayer1Y + 4 < height) {   
+                
+                if (currentKey == downPlayer1) {      
+                    if (paddlePlayer1Y + 4 < height) {   // checks if paddle is in bounds according to games bounds (heightwise)
                         paddlePlayer1->moveDown();
                     }
-                } 
-            
-            if (currentKey == downPlayer2) {      
+                }             
+                
+                if (currentKey == downPlayer2) {      
                     if (paddlePlayer2Y + 4 < height) {   
                         paddlePlayer2->moveDown();
                     }
-                } 
+                }
+
+                if (ball->direction() == STOP) {
+                    ball->randomDirection();
+                }
+
+                if (currentKey == 'q') {
+                    exit = true;
+                }
             
-
-
             
             }
+
 
 
         }
