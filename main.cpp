@@ -248,6 +248,38 @@ private:
             int paddlePlayer1Y = paddlePlayer1->getY();
             int paddlePlayer2Y = paddlePlayer2->getY();
 
+            if (_kbhit()) {                 // checks for keyboard input
+                char currentKey = _getch();  
+                if (currentKey == upPlayer1) {      
+                    if (paddlePlayer1Y > 0) {   // checks if paddle is in bounds
+                        paddlePlayer1->moveUp();
+                    }
+                } 
+            
+                if (currentKey == upPlayer2) {      
+                    if (paddlePlayer2Y > 0) {   
+                        paddlePlayer2->moveUp();
+                    }
+                } 
+            
+            if (currentKey == downPlayer1) {      
+                    if (paddlePlayer1Y + 4 < height) {   
+                        paddlePlayer1->moveDown();
+                    }
+                } 
+            
+            if (currentKey == downPlayer2) {      
+                    if (paddlePlayer2Y + 4 < height) {   
+                        paddlePlayer2->moveDown();
+                    }
+                } 
+            
+
+
+            
+            }
+
+
         }
 };
 
