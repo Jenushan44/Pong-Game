@@ -274,19 +274,41 @@ private:
                     }
                 }
 
-                if (ball->direction() == STOP) {
+                if (ball->direction() == STOP) {    //Randomizes the direction if the direction is STOP
                     ball->randomDirection();
                 }
 
-                if (currentKey == 'q') {
+                if (currentKey == 'q') {            //Exits the game if user clicks q
                     exit = true;
                 }
-            
-            
+            }
+        }
+
+        void Logic() {
+
+            int ballX = ball->getX();
+            int ballY = ball->getY();
+            int paddlePlayer1X = paddlePlayer1->getX();           
+            int paddlePlayer2X = paddlePlayer2->getX();
+            int paddlePlayer1Y = paddlePlayer1->getY();
+            int paddlePlayer2Y = paddlePlayer2->getY();
+
+            for (int i = 0; i < 4; i++) {
+                if (ballX == paddlePlayer1X + 1) {
+                    if (ballY == paddlePlayer1Y + i) {
+                        ball->changeDirection((Direction)((rand() % 3) + 4));
+                    }
+                }
             }
 
-
-
+            for (int i = 0; i < 4; i++) {
+                if (ballX == paddlePlayer2X - 1) {
+                    if (ballY == paddlePlayer2Y + i) {
+                        ball->changeDirection((Direction)((rand() % 3) + 1));
+                    }
+                }
+            }
+            
         }
 };
 
