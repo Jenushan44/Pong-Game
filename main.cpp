@@ -74,29 +74,31 @@ class Ball {
                     break;
             }
         }
-        
+
         void printDetails() {
             std::cout << "Ball [" << x << ", " << y << "][" << currentDirection << "]" << std::endl;
         }
 };
 
 class Paddle {
-    private:
-        int x;
-        int y;
-        int originalPX;
-        int originalPY;
-    public:
-        Paddle() {
-            x = 0;
-            y = 0;
-        }
-        Paddle(int posX, int posY) : Paddle() {
-            originalPX = posX;
-            originalPY = posY;
-            x = posX;
-            y = posY;
-        }
+    
+private:
+    int x;
+    int y;
+    int originalPX;
+    int originalPY;
+
+public:
+    Paddle() {
+        x = 0;
+        y = 0;
+    }
+    Paddle(int posX, int posY) : Paddle() {
+        originalPX = posX;
+        originalPY = posY;
+        x = posX;
+        y = posY;
+    }
 
     inline void resetPaddle() {
         x = originalPX;
@@ -120,121 +122,122 @@ class Paddle {
     }
 
     void printDetails() {
-            std::cout << "Paddle [" << x << ", " << y << "]" << std::endl;
-
+        std::cout << "Paddle [" << x << ", " << y << "]" << std::endl;
     }
 };
 
 class GameManager {
+
 private:
-        int width;
-        int height;
-        int scorePlayer1;
-        int scorePlayer2;
-        char upPlayer1;
-        char upPlayer2;
-        char downPlayer1;
-        char downPlayer2;
-        bool exit;
-        Ball * ball;
-        Paddle * paddlePlayer1;
-        Paddle * paddlePlayer2;
+    int width;
+    int height;
+    int scorePlayer1;
+    int scorePlayer2;
+    char upPlayer1;
+    char upPlayer2;
+    char downPlayer1;
+    char downPlayer2;
+    bool exit;
+    Ball * ball;
+    Paddle * paddlePlayer1;
+    Paddle * paddlePlayer2;
     
     public: 
         GameManager(int w, int h) {
-            srand(time(NULL));
-            exit = false;
-            upPlayer1 = 'w';
-            upPlayer2 = 'o';
-            downPlayer1 = 's';
-            downPlayer2 = 'l';
-            scorePlayer1 = 0;
-            scorePlayer2 = 0;
-            width = w;
-            height = h;
-            ball = new Ball(w / 2, h / 2);
-            paddlePlayer1 = new Paddle(1, h/2 -3);
-            paddlePlayer2 = new Paddle(w-2, h/2 - 3); 
-        }
+        srand(time(NULL));
+        exit = false;
+        upPlayer1 = 'w';
+        upPlayer2 = 'o';
+        downPlayer1 = 's';
+        downPlayer2 = 'l';
+        scorePlayer1 = 0;
+        scorePlayer2 = 0;
+        width = w;
+        height = h;
+        ball = new Ball(w / 2, h / 2);
+        paddlePlayer1 = new Paddle(1, h/2 -3);
+        paddlePlayer2 = new Paddle(w-2, h/2 - 3); 
+    }
         
-        ~GameManager() {
-            delete ball;
-            delete paddlePlayer1; 
-            delete paddlePlayer2;
+    ~GameManager() {
+        delete ball;
+        delete paddlePlayer1; 
+        delete paddlePlayer2;
+    }
+
+    void Score(Paddle * paddlePlayer) {
+        if (paddlePlayer == paddlePlayer1) {
+            scorePlayer1 += 1;
+        } else if (paddlePlayer == paddlePlayer2) {
+            scorePlayer2 += 1;
         }
 
-        void Score(Paddle * paddlePlayer) {
-            if (paddlePlayer == paddlePlayer1) {
-                scorePlayer1 += 1;
-            } else if (paddlePlayer == paddlePlayer2) {
-                scorePlayer2 += 1;
-            }
+        ball->reset();
+        paddlePlayer1->resetPaddle();
+        paddlePlayer2->resetPaddle();
+    }
 
-            ball->reset();
-            paddlePlayer1->resetPaddle();
-            paddlePlayer2->resetPaddle();
+    void Draw() {
+        system("cls");
+
+        // Top Border
+        for (int i = 0; i < width + 2; i++) {
+            std::cout << "\xDB";
         }
+        std::cout << std::endl;
+          
+        // Middle Section
+        for (int i = 0; i < height; i++) {    // y
+            for (int j = 0; j < width; j++) { //x
+                int ballX = ball->getX();
+                int ballY = ball->getY();
+                int paddlePlayer1X = paddlePlayer1->getX();
+                int paddlePlayer2X = paddlePlayer2->getX();
+                int paddlePlayer1Y = paddlePlayer1->getY();
+                int paddlePlayer2Y = paddlePlayer2->getY();
 
-        void Draw() {
-            system("cls");
-
-            // Top Border
-            for (int i = 0; i < width + 2; i++) {
-                std::cout << "\xDB";
-            }
-            std::cout << std::endl;
-
-            // Middle Section
-            for (int i = 0; i < height; i++) {    // y
-                //std::cout << "#";
-
-                for (int j = 0; j < width; j++) { //x
-                    int ballX = ball->getX();
-                    int ballY = ball->getY();
-                    int paddlePlayer1X = paddlePlayer1->getX();
-                    int paddlePlayer2X = paddlePlayer2->getX();
-                    int paddlePlayer1Y = paddlePlayer1->getY();
-                    int paddlePlayer2Y = paddlePlayer2->getY();
-                    
-                    if (j == 0) {
-                        std::cout << "\xDB";
-                    }
-
-                    if (ballX == j && ballY == i) {
-                        std::cout << "O";           
-                    } else if (paddlePlayer1X == j && paddlePlayer1Y == i) {
-                        std::cout << "\xB2";           //Paddle Player 1
-                    } else if (paddlePlayer2X == j && paddlePlayer2Y == i) {
-                        std::cout << "\xB2";           // Paddle Player 2
-                    } else if (paddlePlayer1X == j && paddlePlayer1Y + 1 == i) {
-                        std::cout << "\xB2";         
-                    } else if (paddlePlayer1X == j && paddlePlayer1Y + 2 == i) {
-                        std::cout << "\xB2";           
-                    } else if (paddlePlayer1X == j && paddlePlayer1Y + 3 == i) {
-                        std::cout << "\xB2";                               
-                    } else if (paddlePlayer2X == j && paddlePlayer2Y + 1 == i) {
-                        std::cout << "\xB2";         
-                    } else if (paddlePlayer2X == j && paddlePlayer2Y + 2 == i) {
-                        std::cout << "\xB2";           
-                    } else if (paddlePlayer2X == j && paddlePlayer2Y + 3 == i) {
-                        std::cout << "\xB2";           
-                    } else {
-                        std::cout << " ";                          
-                    }
-                    
-                    if (j == width -1) {
-                        std::cout << "\xDB";
-                    }
+                // Left Side Border 
+                if (j == 0) {
+                    std::cout << "\xDB";
                 }
-                std::cout << std::endl;
-            }
 
-            for (int i = 0; i < width + 2; i++) {
-                std::cout << "\xDB";
+                if (ballX == j && ballY == i) {
+                    std::cout << "O";           
+                } else if (paddlePlayer1X == j && paddlePlayer1Y == i) {
+                    std::cout << "\xB2";        
+                } else if (paddlePlayer2X == j && paddlePlayer2Y == i) {
+                    std::cout << "\xB2";        
+                } else if (paddlePlayer1X == j && paddlePlayer1Y + 1 == i) {
+                    std::cout << "\xB2";         
+                } else if (paddlePlayer1X == j && paddlePlayer1Y + 2 == i) {
+                    std::cout << "\xB2";           
+                } else if (paddlePlayer1X == j && paddlePlayer1Y + 3 == i) {
+                    std::cout << "\xB2";                               
+                } else if (paddlePlayer2X == j && paddlePlayer2Y + 1 == i) {
+                    std::cout << "\xB2";         
+                } else if (paddlePlayer2X == j && paddlePlayer2Y + 2 == i) {
+                    std::cout << "\xB2";           
+                } else if (paddlePlayer2X == j && paddlePlayer2Y + 3 == i) {
+                    std::cout << "\xB2";           
+                } else {
+                    std::cout << " ";                          
+                }
+                    
+                // Right Side Border
+                if (j == width -1) {
+                    std::cout << "\xDB";
+                }
             }
             std::cout << std::endl;
+        }
 
-            std::cout << "Score 1: " << scorePlayer1 << std::endl << "Score 2: " << scorePlayer2 << std::endl;
+        // Bottom Border
+        for (int i = 0; i < width + 2; i++) {
+            std::cout << "\xDB";
+        }
+        std::cout << std::endl;
+
+        std::cout << "Score 1: " << scorePlayer1 << std::endl << "Score 2: " << scorePlayer2 << std::endl;
         }
 
         void userInput() {
@@ -247,10 +250,10 @@ private:
             int paddlePlayer1Y = paddlePlayer1->getY();
             int paddlePlayer2Y = paddlePlayer2->getY();
 
-            if (_kbhit()) {                 // checks for keyboard input
+            if (_kbhit()) {                 
                 char currentKey = _getch();  
                 if (currentKey == upPlayer1) {      
-                    if (paddlePlayer1Y > 0) {   // checks if paddle is in bounds
+                    if (paddlePlayer1Y > 0) {   
                         paddlePlayer1->moveUp();
                     }
                 } 
@@ -262,7 +265,7 @@ private:
                 } 
                 
                 if (currentKey == downPlayer1) {      
-                    if (paddlePlayer1Y + 4 < height) {   // checks if paddle is in bounds according to games bounds (heightwise)
+                    if (paddlePlayer1Y + 4 < height) {   
                         paddlePlayer1->moveDown();
                     }
                 }             
@@ -273,11 +276,11 @@ private:
                     }
                 }
 
-                if (ball->direction() == STOP) {    //Randomizes the direction if the direction is STOP
+                if (ball->direction() == STOP) {   
                     ball->randomDirection();
                 }
 
-                if (currentKey == 'q') {            //Exits the game if user clicks q
+                if (currentKey == 'q') {           
                     exit = true;
                 }
             }
@@ -343,7 +346,6 @@ private:
 };
 
 int main() {
-    
     GameManager b(40, 20);
     b.Run();
     return 0;
