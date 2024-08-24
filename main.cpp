@@ -74,10 +74,9 @@ class Ball {
                     break;
             }
         }
-
-        friend std::ostream& operator<<(std::ostream& o, Ball b) {
-            o << "Ball [" << b.x << ", " << b.y << "][" << b.currentDirection <<"]" << std::endl;
-            return o;
+        
+        void printDetails() {
+            std::cout << "Ball [" << x << ", " << y << "][" << currentDirection << "]" << std::endl;
         }
 };
 
@@ -120,10 +119,10 @@ class Paddle {
         y++;
     }
 
-    friend std::ostream& operator<<(std::ostream& o, Paddle b) {
-            o << "Paddle [" << b.x << ", " << b.y << "]" << std::endl;
-            return o;
-        }
+    void printDetails() {
+            std::cout << "Paddle [" << x << ", " << y << "]" << std::endl;
+
+    }
 };
 
 class GameManager {
@@ -158,7 +157,7 @@ private:
             paddlePlayer2 = new Paddle(w-2, h/2 - 3); 
         }
         
-        GameManager() {
+        ~GameManager() {
             delete ball;
             delete paddlePlayer1; 
             delete paddlePlayer2;
@@ -181,7 +180,7 @@ private:
 
             // Top Border
             for (int i = 0; i < width + 2; i++) {
-                std::cout << "#";
+                std::cout << "\xDB";
             }
             std::cout << std::endl;
 
@@ -198,40 +197,40 @@ private:
                     int paddlePlayer2Y = paddlePlayer2->getY();
                     
                     if (j == 0) {
-                        std::cout << "#";
+                        std::cout << "\xDB";
                     }
 
                     if (ballX == j && ballY == i) {
-                        std::cout << "O";           // Ball in Middle
+                        std::cout << "O";           
                     } else if (paddlePlayer1X == j && paddlePlayer1Y == i) {
-                        std::cout << "#";           //Paddle Player 1
+                        std::cout << "\xB2";           //Paddle Player 1
                     } else if (paddlePlayer2X == j && paddlePlayer2Y == i) {
-                        std::cout << "#";           // Paddle Player 2
+                        std::cout << "\xB2";           // Paddle Player 2
                     } else if (paddlePlayer1X == j && paddlePlayer1Y + 1 == i) {
-                        std::cout << "#";         
+                        std::cout << "\xB2";         
                     } else if (paddlePlayer1X == j && paddlePlayer1Y + 2 == i) {
-                        std::cout << "#";           
+                        std::cout << "\xB2";           
                     } else if (paddlePlayer1X == j && paddlePlayer1Y + 3 == i) {
-                        std::cout << "#";                               
+                        std::cout << "\xB2";                               
                     } else if (paddlePlayer2X == j && paddlePlayer2Y + 1 == i) {
-                        std::cout << "#";         
+                        std::cout << "\xB2";         
                     } else if (paddlePlayer2X == j && paddlePlayer2Y + 2 == i) {
-                        std::cout << "#";           
+                        std::cout << "\xB2";           
                     } else if (paddlePlayer2X == j && paddlePlayer2Y + 3 == i) {
-                        std::cout << "#";           
+                        std::cout << "\xB2";           
                     } else {
                         std::cout << " ";                          
                     }
                     
                     if (j == width -1) {
-                        std::cout << "#";
+                        std::cout << "\xDB";
                     }
                 }
                 std::cout << std::endl;
             }
 
             for (int i = 0; i < width + 2; i++) {
-                std::cout << "#";
+                std::cout << "\xDB";
             }
             std::cout << std::endl;
 
@@ -308,14 +307,44 @@ private:
                     }
                 }
             }
+
+            if (ballY == height -1) {
+                if (ball->direction() == DOWNRIGHT) {
+                    ball->changeDirection(UPRIGHT);
+                } else if (ball->direction() == DOWNLEFT) {
+                    ball->changeDirection(UPLEFT);
+                }
+            }
             
+            if (ballY == 0) {
+                if (ball->direction() == UPRIGHT) {
+                    ball->changeDirection(DOWNRIGHT);
+                } else if (ball->direction() == UPLEFT) {
+                    ball->changeDirection(DOWNLEFT);
+                }
+            }
+
+            if (ballX == width -1) {
+                Score(paddlePlayer1);
+            }
+
+            if (ballX == 0) {
+                Score(paddlePlayer2);
+            }
+        }
+
+        void Run() {
+            while (!exit) {
+                Draw();
+                userInput();
+                Logic();
+            }
         }
 };
 
-
 int main() {
-
+    
     GameManager b(40, 20);
-    b.Draw();
+    b.Run();
     return 0;
 }
